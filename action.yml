@@ -1,0 +1,21 @@
+name: 'Setup Nsolid environment'
+description: 'Setup a Nsolid environment'
+author: 'Nodesource'
+inputs:
+  node-version:
+    description: 'Node to use, if no values specified we will setup the major version available for the nsolid-version. E.g: 18.x, 20.x.'
+  nsolid-version:
+    required: true
+    description: 'Nsolid version to use. E.g: 5.0.5, 4.10.0, latest.'
+  platform:
+    description: 'Target operating system for Nsolid to use. E.g: linux, darwin, win32. Will use linux by default.'
+  arch:
+    description: 'Target architecture for Node to use.'
+
+outputs:
+  nsolid-version:
+    description: 'The installed Nsolid version.'
+runs:
+  using: 'node20'
+  main: 'dist/setup/index.js'
+  post-if: success()
