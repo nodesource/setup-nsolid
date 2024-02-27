@@ -55,3 +55,23 @@ jobs:
         run: |
             nsolid -v
             node -v
+
+  nsolid-action:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nodesource/setup-nsolid@v1
+        with:
+          node-version: "20"
+          nsolid-version: "5"
+      - name: Setup Nsolid from dist
+        uses: ./
+
+      - name: Verify Nsolid
+        run: | 
+            nsolid -vv
+            node -vv
+      - name: Verify Node version
+        run: |
+            nsolid -v
+            node -v
