@@ -32721,6 +32721,7 @@ async function setupNsolid({ nodeVersion, nsolidVersion, platform, arch }) {
     platform,
     arch,
   });
+
   let toolPath = await downloadNsolid(metadata);
   if (metadata.platform === "win32") {
     toolPath = external_path_.join(core.toWin32Path(`${toolPath}/`));
@@ -32753,6 +32754,7 @@ async function setupNsolid({ nodeVersion, nsolidVersion, platform, arch }) {
 
 async function downloadNsolid(metadata) {
   let downloadPath = "";
+  const extractPath = process.env.RUNNER_TEMP || process.env.RUNNER_WORKSPACE || process.cwd();
   const fileName = `nsolid-v${metadata.nsolidVersion}-${metadata.nodeVersion}-${metadata.platform}-${metadata.arch}`;
 
   // If the platform is win32, we need to extract the tarball and move the files to a different location.
@@ -32765,9 +32767,8 @@ async function downloadNsolid(metadata) {
     ]);
     return toolPath;
   }
-
   downloadPath = await tool_cache.downloadTool(metadata.url);
-  const toolPath = await tool_cache.extractTar(downloadPath, fileName, ["xz", "--strip", "1"]);
+  const toolPath = await tool_cache.extractTar(downloadPath, `${extractPath}/${fileName}`, ["xz", "--strip", "1"]);
   return toolPath;
 }
 
