@@ -10,6 +10,9 @@ on:
       - releases/*
     paths-ignore:
       - '**.md'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 7 * * *'
 
 jobs:
   nsolid-version:
